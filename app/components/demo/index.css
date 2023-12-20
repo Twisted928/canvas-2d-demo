@@ -1,0 +1,8 @@
+.wrapper {
+	margin-top: 88px;
+	scrollbar-width: none; /* Firefox */
+}
+
+.wrapper::-webkit-scrollbar {
+	display: none;
+}
