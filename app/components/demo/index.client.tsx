@@ -54,6 +54,23 @@ const Home: React.FC = () => {
 	// 	})
 	// }
 
+	function drawStar(ctx: CanvasRenderingContext2D, r: number) {
+		ctx.save()
+		ctx.beginPath()
+		ctx.moveTo(r, 0)
+		for (var i = 0; i < 9; i++) {
+			ctx.rotate(Math.PI / 5)
+			if (i % 2 == 0) {
+				ctx.lineTo((r / 0.525731) * 0.200811, 0)
+			} else {
+				ctx.lineTo(r, 0)
+			}
+		}
+		ctx.closePath()
+		ctx.fill()
+		ctx.restore()
+	}
+
 	const draw = () => {
 		const canvas = canvasRef.current as HTMLCanvasElement
 		const ctx = canvas?.getContext('2d')
@@ -291,8 +308,126 @@ const Home: React.FC = () => {
 		// }
 
 		// 填文本
+		// ctx.font = '48px serif'
+		// ctx.fillText('Hello world', 10, 50)
+
+		// save 和 restore 的应用例子
+		/*
+		
+		ctx.fillRect(0, 0, 150, 150); // 使用默认设置绘制一个矩形
+		ctx.save(); // 保存默认状态
+	
+		ctx.fillStyle = "#09F"; // 在原有配置基础上对颜色做改变
+		ctx.fillRect(15, 15, 120, 120); // 使用新的设置绘制一个矩形
+	  
+		ctx.save(); // 保存当前状态
+		ctx.fillStyle = "#FFF"; // 再次改变颜色配置
+		ctx.globalAlpha = 0.5;
+		ctx.fillRect(30, 30, 90, 90); // 使用新的配置绘制一个矩形
+	  
+		ctx.restore(); // 重新加载之前的颜色状态
+		ctx.fillRect(45, 45, 60, 60); // 使用上一次的配置绘制一个矩形
+	  
+		ctx.restore(); // 加载默认颜色配置
+		ctx.fillRect(60, 60, 30, 30); // 使用加载的配置绘制一个矩形
+		 */
+
+		// canvas 的移动
+		// for (var i = 0; i < 3; i++) {
+		// 	for (var j = 0; j < 3; j++) {
+		// 		ctx.save()
+		// 		ctx.fillStyle = 'rgb(' + 51 * i + ', ' + (255 - 51 * i) + ', 255)'
+		// 		ctx.translate(10 + j * 50, 10 + i * 50)
+		// 		ctx.fillRect(0, 0, 25, 25)
+		// 		ctx.restore()
+		// 	}
+		// }
+
+		// canvas 的旋转
+		/*
+		// left rectangles, rotate from canvas origin
+		ctx.save()
+		// blue rect
+		ctx.fillStyle = '#0095DD'
+		ctx.fillRect(30, 30, 100, 100)
+		ctx.rotate((Math.PI / 180) * 25)
+		// grey rect
+		ctx.fillStyle = '#4D4E53'
+		ctx.fillRect(30, 30, 100, 100)
+		ctx.restore()
+
+		// right rectangles, rotate from rectangle center
+		// draw blue rect
+		ctx.fillStyle = '#0095DD'
+		ctx.fillRect(150, 30, 100, 100)
+
+		ctx.translate(200, 80) // translate to rectangle center
+		// x = x + 0.5 * width
+		// y = y + 0.5 * height
+		ctx.rotate((Math.PI / 180) * 25) // rotate
+		ctx.translate(-200, -80) // translate back
+
+		// draw grey rect
+		ctx.fillStyle = '#4D4E53'
+		ctx.fillRect(150, 30, 100, 100)
+		*/
+
+		//  canvas 的缩放
+		/*
+		
+		// draw a simple rectangle, but scale it.
+		ctx.save()
+		ctx.scale(10, 3)
+		ctx.fillRect(1, 10, 10, 10)
+		ctx.restore()
+		// mirror horizontally
+		ctx.scale(-1, 1)
 		ctx.font = '48px serif'
-		ctx.fillText('Hello world', 10, 50)
+		ctx.fillText('MDN', -135, 120)
+		 */
+
+		// 变形矩阵
+		// var sin = Math.sin(Math.PI / 6)
+		// var cos = Math.cos(Math.PI / 6)
+		// ctx.translate(100, 100)
+		// var c = 0
+		// for (var i = 0; i <= 12; i++) {
+		// 	c = Math.floor((255 / 12) * i)
+		// 	ctx.fillStyle = 'rgb(' + c + ',' + c + ',' + c + ')'
+		// 	ctx.fillRect(0, 0, 100, 10)
+		// 	ctx.transform(cos, sin, -sin, cos, 0, 0)
+		// }
+		// ctx.setTransform(-1, 0, 0, 1, 100, 100)
+		// ctx.fillStyle = 'rgba(255, 128, 255, 0.5)'
+		// ctx.fillRect(0, 50, 100, 100)
+
+		
+		// canvas的裁剪
+		/*
+		ctx.fillRect(0, 0, 150, 150)
+		ctx.translate(75, 75)
+		// Create a circular clipping path
+		ctx.beginPath()
+		ctx.arc(0, 0, 60, 0, Math.PI * 2, true)
+		ctx.clip()
+		// draw background
+		var lingrad = ctx.createLinearGradient(0, -75, 0, 75)
+		lingrad.addColorStop(0, '#232256')
+		lingrad.addColorStop(1, '#143778')
+		ctx.fillStyle = lingrad
+		ctx.fillRect(-75, -75, 150, 150)
+		// draw stars
+		for (var j = 1; j < 50; j++) {
+			ctx.save()
+			ctx.fillStyle = '#fff'
+			ctx.translate(
+				75 - Math.floor(Math.random() * 150),
+				75 - Math.floor(Math.random() * 150)
+			)
+			drawStar(ctx, Math.floor(Math.random() * 4) + 2)
+			ctx.restore()
+		}
+		*/
 	}
 
 	useEffect(() => {
